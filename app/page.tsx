@@ -1,173 +1,138 @@
+import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Star, ShieldCheck, Headphones } from 'lucide-react'
-import ProductCard from './components/ProductCard'
-import { getFeatured, getAdultes, getEnfants } from './data/products'
+import { ArrowRight, Headphones, ShieldCheck, Star } from 'lucide-react'
+import FinalCTA from './components/sections/FinalCTA'
+import ProductGrid from './components/sections/ProductGrid'
+import SectionHeader from './components/ui/SectionHeader'
+import { getAdultes, getEnfants, getFeatured } from './data/products'
+import { site } from './data/site'
+
+const categories = [
+  {
+    href: '/adultes',
+    label: 'Adultes',
+    sub: 'Pyjamas · Joggings · Combinaisons',
+    img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=1000&q=85',
+  },
+  {
+    href: '/enfants',
+    label: 'Enfants',
+    sub: 'Pyjamas · Combinaisons · Ensembles',
+    img: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=1000&q=85',
+  },
+]
+
+const commitments = [
+  {
+    icon: Star,
+    title: 'Qualité sélectionnée',
+    desc: 'Chaque pyjama est choisi pour sa douceur, ses finitions et sa durabilité.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Boutique de référence',
+    desc: 'Une adresse reconnue à Kindonou, simple à retrouver à Cotonou.',
+  },
+  {
+    icon: Headphones,
+    title: 'Service personnalisé',
+    desc: 'Conseils disponibles en boutique, par téléphone ou directement sur WhatsApp.',
+  },
+]
 
 export default function HomePage() {
   const featured = getFeatured().slice(0, 4)
-  const adultesSample = getAdultes().slice(0, 3)
-  const enfantsSample = getEnfants().slice(0, 3)
+  const adultesSample = getAdultes().slice(0, 4)
+  const enfantsSample = getEnfants().slice(0, 4)
 
   return (
     <>
-      {/* ═══ HERO ═══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: 'var(--noir)' }}>
-        {/* BG image full — right half on desktop, subtle on mobile */}
+      <section className="relative flex min-h-screen items-center overflow-hidden bg-[var(--brun-nuit)] text-white">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=1400&q=85"
+          <Image
+            src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=1600&q=85"
             alt=""
-            className="w-full h-full object-cover"
-            style={{ opacity: 0.18 }}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-24"
           />
-          <div className="absolute inset-0" style={{
-            background: 'linear-gradient(105deg, rgba(13,13,13,0.98) 0%, rgba(13,13,13,0.85) 45%, rgba(13,13,13,0.4) 100%)'
-          }}/>
+          <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(28,20,16,0.98)_0%,rgba(28,20,16,0.9)_48%,rgba(28,20,16,0.42)_100%)]" />
         </div>
-
-        {/* Right photo panel — desktop only */}
-        <div className="absolute right-0 top-0 bottom-0 hidden lg:block" style={{ width: '42%' }}>
-          <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=90"
+        <div className="absolute bottom-0 right-0 top-0 hidden w-[42%] lg:block">
+          <Image
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1000&q=90"
             alt="Collection pyjamas premium"
-            className="w-full h-full object-cover"
+            fill
+            priority
+            sizes="42vw"
+            className="object-cover"
           />
-          <div className="absolute inset-0" style={{
-            background: 'linear-gradient(to right, var(--noir) 0%, transparent 30%)'
-          }}/>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--brun-nuit)_0%,transparent_34%)]" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 container" style={{ paddingTop: '7rem', paddingBottom: '5rem' }}>
-          <div style={{ maxWidth: '560px' }}>
-            <p className="label fade-up" style={{ color: 'rgba(232,24,122,0.9)', marginBottom: '1.5rem' }}>
-              Cotonou, Bénin · Depuis 2020
-            </p>
-
-            <h1 className="fade-up delay-1" style={{
-              fontFamily: '"Playfair Display", serif',
-              color: 'white',
-              fontWeight: 500,
-              lineHeight: 1.06,
-              marginBottom: '1.75rem',
-              fontSize: 'clamp(2.8rem, 6vw, 5.5rem)'
-            }}>
-              La Maison<br/>
-              <span style={{ color: 'var(--rose)' }}>des Pyjamas</span>
+        <div className="container relative z-10 pb-20 pt-32">
+          <div className="max-w-xl">
+            <p className="label fade-up mb-6 text-[var(--lin)]">{site.location}</p>
+            <h1 className="fade-up delay-1 font-display text-[clamp(3.2rem,7vw,6.4rem)] font-semibold leading-[0.95] text-white">
+              La Maison<br />
+              <span className="text-[var(--terre)]">des Pyjamas</span>
             </h1>
-
-            <p className="fade-up delay-2" style={{
-              fontFamily: '"DM Sans", sans-serif',
-              color: 'rgba(255,255,255,0.55)',
-              fontSize: '1.0625rem',
-              lineHeight: 1.75,
-              marginBottom: '2.5rem',
-              maxWidth: '440px'
-            }}>
-              Votre spécialiste du pyjama et vêtement de confort.
-              Qualité sélectionnée, prix accessibles, pour toute la famille.
+            <p className="fade-up delay-2 mt-7 max-w-md font-body text-lg leading-8 text-white/68">
+              Votre spécialiste du pyjama et vêtement de confort. Qualité sélectionnée, prix accessibles, pour toute la famille.
             </p>
-
-            <div className="fade-up delay-3" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link href="/catalogue" className="btn btn-primary">
-                Voir la collection <ArrowRight size={15}/>
+            <div className="fade-up delay-3 mt-9 flex flex-wrap gap-3">
+              <Link href="/catalogue" className="btn btn-terre">
+                Voir la collection <ArrowRight size={16} />
               </Link>
-              <a href="https://wa.me/22997338843" target="_blank" rel="noopener noreferrer"
-                className="btn btn-ghost-white">
+              <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="btn btn-ghost-white">
                 Commander WhatsApp
               </a>
             </div>
-
-            {/* Stats */}
-            <div className="fade-up delay-3" style={{
-              display: 'flex',
-              gap: '2.5rem',
-              marginTop: '3.5rem',
-              paddingTop: '2.5rem',
-              borderTop: '1px solid rgba(255,255,255,0.08)',
-              flexWrap: 'wrap'
-            }}>
-              {[['500+', 'Modèles'], ['5 ans', "D'expérience"], ['100%', 'Satisfaction']].map(([val, label]) => (
+            <div className="fade-up delay-3 mt-12 grid max-w-lg grid-cols-3 gap-5 border-t border-white/10 pt-8">
+              {[
+                ['500+', 'Modèles'],
+                ['5 ans', "D'expérience"],
+                ['100%', 'Conseil'],
+              ].map(([value, label]) => (
                 <div key={label}>
-                  <p style={{
-                    fontFamily: '"Playfair Display", serif',
-                    color: 'white',
-                    fontSize: '1.875rem',
-                    fontWeight: 500,
-                    lineHeight: 1
-                  }}>{val}</p>
-                  <p style={{
-                    fontFamily: '"DM Sans", sans-serif',
-                    color: 'rgba(255,255,255,0.35)',
-                    fontSize: '0.7rem',
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
-                    marginTop: '0.4rem'
-                  }}>{label}</p>
+                  <p className="font-display text-3xl font-semibold leading-none text-white">{value}</p>
+                  <p className="mt-2 font-body text-xs font-bold uppercase text-white/38">{label}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2" style={{ transform: 'translateX(-50%)' }}>
-          <div style={{
-            width: '1px', height: '48px',
-            background: 'linear-gradient(to bottom, transparent, rgba(232,24,122,0.6))',
-            margin: '0 auto',
-            animation: 'fadeUp 2s ease infinite'
-          }}/>
-        </div>
       </section>
 
-      {/* ═══ CATÉGORIES ═════════════════════════════════════ */}
-      <section className="section" style={{ background: 'var(--creme)' }}>
+      <section className="section bg-[var(--creme)]">
         <div className="container">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <p className="label" style={{ marginBottom: '0.75rem' }}>Nos Collections</p>
-              <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(2rem, 4vw, 3.25rem)', fontWeight: 500, color: 'var(--noir)', lineHeight: 1.15 }}>
-                Pour toute la famille
-              </h2>
-            </div>
-            <Link href="/catalogue" className="arrow-link" style={{ color: 'var(--gris)' }}>
-              Voir tout <ArrowRight size={14}/>
-            </Link>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}>
-            {[
-              { href: '/adultes', label: 'Adultes', sub: 'Pyjamas · Joggings · Combinaisons', img: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=900&q=85' },
-              { href: '/enfants', label: 'Enfants', sub: 'Pyjamas · Combinaisons · Ensembles', img: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=900&q=85' },
-            ].map((cat) => (
-              <Link key={cat.href} href={cat.href} className="group" style={{
-                display: 'block',
-                position: 'relative',
-                overflow: 'hidden',
-                aspectRatio: '4/3',
-                background: 'var(--noir)'
-              }}>
-                <img src={cat.img} alt={cat.label} style={{
-                  width: '100%', height: '100%', objectFit: 'cover',
-                  opacity: 0.7,
-                  transition: 'transform 0.7s ease, opacity 0.4s ease',
-                  display: 'block'
-                }}
-                className="group-hover:scale-105 group-hover:opacity-60"
+          <SectionHeader
+            eyebrow="Nos collections"
+            title="Pour toute la famille"
+            action={
+              <Link href="/catalogue" className="arrow-link text-[var(--brun-moyen)]">
+                Voir tout <ArrowRight size={15} />
+              </Link>
+            }
+            className="mb-10"
+          />
+          <div className="grid gap-5 md:grid-cols-2">
+            {categories.map((category) => (
+              <Link key={category.href} href={category.href} className="group relative block min-h-[420px] overflow-hidden bg-[var(--brun-nuit)]">
+                <Image
+                  src={category.img}
+                  alt={category.label}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover opacity-75 transition duration-700 group-hover:scale-105 group-hover:opacity-60"
                 />
-                <div className="img-overlay" style={{ position: 'absolute', inset: 0 }}/>
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(1.5rem, 3vw, 2.5rem)' }}>
-                  <p className="label" style={{ color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>{cat.sub}</p>
-                  <h3 style={{
-                    fontFamily: '"Playfair Display", serif',
-                    color: 'white',
-                    fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-                    fontWeight: 500,
-                    marginBottom: '0.75rem'
-                  }}>{cat.label}</h3>
-                  <span className="arrow-link group-hover:opacity-100" style={{ color: 'white', opacity: 0, transition: 'opacity 0.3s ease' }}>
-                    Découvrir <ArrowRight size={14}/>
+                <div className="img-overlay absolute inset-0" />
+                <div className="absolute inset-x-0 bottom-0 p-8 md:p-10">
+                  <p className="label mb-3 text-white/65">{category.sub}</p>
+                  <h3 className="font-display text-5xl font-semibold text-white">{category.label}</h3>
+                  <span className="arrow-link mt-5 text-white opacity-80">
+                    Découvrir <ArrowRight size={15} />
                   </span>
                 </div>
               </Link>
@@ -176,192 +141,94 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══ BESTSELLERS ════════════════════════════════════ */}
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
+      <section className="section border-y border-[var(--lin)] bg-white">
         <div className="container">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <p className="label" style={{ marginBottom: '0.75rem' }}>Sélection</p>
-              <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(2rem, 4vw, 3.25rem)', fontWeight: 500, color: 'var(--noir)' }}>
-                Coups de cœur
-              </h2>
-            </div>
-            <Link href="/catalogue" className="arrow-link" style={{ color: 'var(--gris)' }}>
-              Catalogue complet <ArrowRight size={14}/>
-            </Link>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}
-            className="lg:grid-cols-4 md:grid-cols-2">
-            {featured.map(p => <ProductCard key={p.id} product={p}/>)}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ BRAND STATEMENT ════════════════════════════════ */}
-      <section style={{ background: 'var(--rose)' }}>
-        <div className="container" style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', alignItems: 'center' }}
-            className="lg:grid-cols-2">
-            <div>
-              <p style={{
-                fontFamily: '"DM Sans", sans-serif',
-                fontSize: '0.7rem',
-                fontWeight: 700,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.6)',
-                marginBottom: '1.5rem'
-              }}>Notre Promesse</p>
-              <h2 style={{
-                fontFamily: '"Playfair Display", serif',
-                color: 'white',
-                fontWeight: 500,
-                lineHeight: 1.2,
-                marginBottom: '1.5rem',
-                fontSize: 'clamp(1.875rem, 4vw, 3rem)'
-              }}>
-                "Dormez autrement<br/>avec nos pyjamas"
-              </h2>
-              <p style={{
-                fontFamily: '"DM Sans", sans-serif',
-                color: 'rgba(255,255,255,0.75)',
-                lineHeight: 1.8,
-                marginBottom: '2rem',
-                maxWidth: '440px'
-              }}>
-                Chaque modèle est sélectionné pour sa douceur, sa coupe et sa durabilité.
-                Nous croyons que le confort est un droit accessible à tous.
-              </p>
-              <Link href="/a-propos" className="btn btn-ghost-white">
-                Notre histoire <ArrowRight size={15}/>
+          <SectionHeader
+            eyebrow="Sélection"
+            title="Coups de cœur"
+            action={
+              <Link href="/catalogue" className="arrow-link text-[var(--brun-moyen)]">
+                Catalogue complet <ArrowRight size={15} />
               </Link>
-            </div>
-            <div style={{ position: 'relative' }}>
-              <img
-                src="https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?w=700&q=85"
-                alt="Qualité pyjama"
-                style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }}
-              />
-              <div style={{
-                position: 'absolute', bottom: '-1.25rem', left: '-1.25rem',
-                background: 'white', padding: '1.25rem 1.5rem'
-              }} className="hidden md:block">
-                <p style={{ fontFamily: '"Playfair Display", serif', fontSize: '2rem', fontWeight: 500, color: 'var(--rose)', lineHeight: 1 }}>5+</p>
-                <p style={{ fontFamily: '"DM Sans", sans-serif', fontSize: '0.65rem', color: 'var(--gris)', textTransform: 'uppercase', letterSpacing: '0.12em', marginTop: '0.3rem' }}>Ans de confiance</p>
-              </div>
-            </div>
-          </div>
+            }
+            className="mb-10"
+          />
+          <ProductGrid products={featured} />
         </div>
       </section>
 
-      {/* ═══ APERÇU ADULTES ═════════════════════════════════ */}
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <p className="label" style={{ marginBottom: '0.6rem' }}>Collection</p>
-              <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', fontWeight: 500, color: 'var(--noir)' }}>Adultes</h2>
-            </div>
-            <Link href="/adultes" className="arrow-link" style={{ color: 'var(--gris)' }}>
-              Voir tout <ArrowRight size={14}/>
-            </Link>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}
-            className="md:grid-cols-3 grid-cols-1">
-            {adultesSample.map(p => <ProductCard key={p.id} product={p}/>)}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ APERÇU ENFANTS ═════════════════════════════════ */}
-      <section className="section" style={{ background: 'var(--rose-pale)', borderTop: '1px solid var(--rose-muted)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <div>
-              <p className="label" style={{ marginBottom: '0.6rem' }}>Collection</p>
-              <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(1.75rem, 3vw, 2.5rem)', fontWeight: 500, color: 'var(--noir)' }}>Enfants</h2>
-            </div>
-            <Link href="/enfants" className="arrow-link" style={{ color: 'var(--gris)' }}>
-              Voir tout <ArrowRight size={14}/>
-            </Link>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}
-            className="md:grid-cols-3 grid-cols-1">
-            {enfantsSample.map(p => <ProductCard key={p.id} product={p}/>)}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ ARGUMENTS ══════════════════════════════════════ */}
-      <section className="section" style={{ borderTop: '1px solid var(--border)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <p className="label" style={{ marginBottom: '0.75rem' }}>Pourquoi nous</p>
-            <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(1.875rem, 4vw, 2.75rem)', fontWeight: 500, color: 'var(--noir)' }}>
-              Notre engagement
+      <section className="bg-[var(--terre)] py-20 text-white">
+        <div className="container grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="label mb-5 text-white/70">Notre promesse</p>
+            <h2 className="font-display text-[clamp(2.4rem,5vw,4rem)] font-semibold leading-tight">
+              Dormez autrement avec nos pyjamas.
             </h2>
+            <p className="mt-5 max-w-md font-body text-base leading-8 text-white/78">
+              Chaque modèle est sélectionné pour sa douceur, sa coupe et sa durabilité.
+            </p>
+            <Link href="/a-propos" className="btn btn-ghost-white mt-8">
+              Notre histoire <ArrowRight size={16} />
+            </Link>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}
-            className="md:grid-cols-3 grid-cols-1">
-            {[
-              { icon: <Star size={20}/>, title: 'Qualité sélectionnée', desc: 'Chaque pyjama est rigoureusement choisi pour sa douceur, ses finitions et sa durabilité.' },
-              { icon: <ShieldCheck size={20}/>, title: 'Boutique de référence', desc: 'Implantés à Kindonou depuis plusieurs années, adresse reconnue à Cotonou.' },
-              { icon: <Headphones size={20}/>, title: 'Service personnalisé', desc: 'Disponibles par téléphone, WhatsApp ou en boutique pour vous accompagner.' },
-            ].map(item => (
-              <div key={item.title} style={{
-                padding: '2.25rem',
-                border: '1px solid var(--border)',
-                transition: 'border-color 0.25s ease',
-              }}
-              className="hover:border-rose">
-                <div style={{
-                  width: '2.75rem', height: '2.75rem',
-                  background: 'var(--rose-pale)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: 'var(--rose)',
-                  marginBottom: '1.5rem'
-                }}>{item.icon}</div>
-                <div className="divider" style={{ marginBottom: '1.25rem' }}/>
-                <h3 style={{ fontFamily: '"Playfair Display", serif', fontSize: '1.25rem', fontWeight: 500, color: 'var(--noir)', marginBottom: '0.75rem' }}>
-                  {item.title}
-                </h3>
-                <p style={{ fontFamily: '"DM Sans", sans-serif', fontSize: '0.875rem', color: 'var(--gris)', lineHeight: 1.7 }}>
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+          <div className="relative min-h-[420px] overflow-hidden bg-[var(--brun-nuit)]">
+            <Image
+              src="https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?w=900&q=85"
+              alt="Qualité pyjama"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
 
-      {/* ═══ CTA FINAL ══════════════════════════════════════ */}
-      <section style={{ background: 'var(--noir)' }}>
-        <div className="container" style={{ paddingTop: '5rem', paddingBottom: '5rem', textAlign: 'center' }}>
-          <p className="label" style={{ color: 'rgba(255,255,255,0.3)', marginBottom: '1.25rem' }}>Cotonou, Bénin</p>
-          <h2 style={{
-            fontFamily: '"Playfair Display", serif',
-            color: 'white',
-            fontWeight: 500,
-            marginBottom: '1.25rem',
-            fontSize: 'clamp(1.875rem, 5vw, 3.5rem)'
-          }}>
-            Prêt à dormir autrement ?
-          </h2>
-          <p style={{
-            fontFamily: '"DM Sans", sans-serif',
-            color: 'rgba(255,255,255,0.45)',
-            marginBottom: '2.5rem',
-            maxWidth: '400px',
-            margin: '0 auto 2.5rem'
-          }}>
-            Visitez notre boutique ou commandez directement par WhatsApp.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/catalogue" className="btn btn-primary">Voir le catalogue</Link>
-            <Link href="/contact" className="btn btn-ghost-white">Nous contacter</Link>
+      <section className="section bg-[var(--creme)]">
+        <div className="container">
+          <SectionHeader
+            eyebrow="Collection"
+            title="Adultes"
+            action={<Link href="/adultes" className="arrow-link text-[var(--brun-moyen)]">Voir tout <ArrowRight size={15} /></Link>}
+            className="mb-10"
+          />
+          <ProductGrid products={adultesSample} />
+        </div>
+      </section>
+
+      <section className="section border-y border-[var(--lin)] bg-[var(--lin-doux)]">
+        <div className="container">
+          <SectionHeader
+            eyebrow="Collection"
+            title="Enfants"
+            action={<Link href="/enfants" className="arrow-link text-[var(--brun-moyen)]">Voir tout <ArrowRight size={15} /></Link>}
+            className="mb-10"
+          />
+          <ProductGrid products={enfantsSample} />
+        </div>
+      </section>
+
+      <section className="section bg-white">
+        <div className="container">
+          <SectionHeader eyebrow="Pourquoi nous" title="Notre engagement" align="center" className="mb-12" />
+          <div className="grid gap-5 md:grid-cols-3">
+            {commitments.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.title} className="border border-[var(--lin)] bg-white p-8 transition-colors hover:border-[var(--terre)]">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center bg-[var(--lin-doux)] text-[var(--terre)]">
+                    <Icon size={21} />
+                  </div>
+                  <div className="divider mb-5" />
+                  <h3 className="font-display text-2xl font-semibold text-[var(--brun-nuit)]">{item.title}</h3>
+                  <p className="mt-3 font-body text-sm leading-7 text-[var(--brun-moyen)]">{item.desc}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
+
+      <FinalCTA />
     </>
   )
 }

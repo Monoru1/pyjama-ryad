@@ -1,102 +1,125 @@
 import Link from 'next/link'
-import { Phone, MapPin, MessageCircle } from 'lucide-react'
+import { ArrowUpRight, MapPin, MessageCircle, Phone } from 'lucide-react'
+import { navigation, site } from '../data/site'
+import BrandMark from './ui/BrandMark'
+
+function IconInstagram() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+function IconFacebook() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  )
+}
+
+const productLinks = [
+  'Pyjamas adultes',
+  'Joggings et loungewear',
+  'Combinaisons',
+  'Pyjamas enfants',
+  'Ensembles enfants',
+  'Chaussons et accessoires',
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--noir)] text-white">
-      {/* Top band */}
+    <footer className="bg-[var(--brun-nuit)] text-white">
       <div className="border-b border-white/10">
-        <div className="container py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M22 14c0 4.418-3.582 8-8 8a8 8 0 110-16c.3 0 .597.017.888.05A6 6 0 1022 14z" fill="#E8187A"/>
-                <circle cx="18" cy="8" r="1.5" fill="#E8187A" opacity=".6"/>
-              </svg>
-              <div>
-                <p className="font-display font-semibold text-sm text-white">La Maison</p>
-                <p className="font-body text-[10px] font-semibold tracking-[0.18em] uppercase text-[var(--rose)]">des Pyjamas</p>
-              </div>
-            </div>
-            <p className="font-body text-sm text-white/50 leading-relaxed mb-6">
-              Votre spécialiste pyjama et vêtement de confort à Cotonou, Bénin. Qualité et douceur pour toute la famille.
+        <div className="container grid gap-12 py-16 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1.15fr] lg:py-20">
+          <div>
+            <BrandMark tone="light" />
+            <p className="mt-6 max-w-sm font-body text-sm leading-7 text-white/62">
+              Pyjamas, combinaisons et vêtements de confort sélectionnés à Cotonou pour toute la famille.
             </p>
-            <p className="label opacity-40 italic normal-case tracking-normal font-body text-xs">
-              "Dormez Autrement"
+            <p className="mt-5 font-display text-2xl italic leading-tight text-[var(--lin)]">
+              {site.tagline}
             </p>
           </div>
 
-          {/* Nav */}
           <div>
-            <p className="label mb-6">Navigation</p>
-            <ul className="flex flex-col gap-3">
-              {[['/', 'Accueil'], ['/adultes', 'Collection Adultes'], ['/enfants', 'Collection Enfants'],
-                ['/catalogue', 'Catalogue'], ['/a-propos', 'À Propos'], ['/contact', 'Contact']].map(([href, label]) => (
-                <li key={href}>
-                  <Link href={href} className="font-body text-sm text-white/50 hover:text-white transition-colors">
-                    {label}
+            <p className="footer-title">Navigation</p>
+            <ul className="mt-5 space-y-3">
+              <li>
+                <Link href="/" className="footer-link">Accueil</Link>
+              </li>
+              {navigation.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="footer-link">
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Produits */}
           <div>
-            <p className="label mb-6">Nos Produits</p>
-            <ul className="flex flex-col gap-3 font-body text-sm text-white/50">
-              {['Pyjamas Adultes', 'Joggings & Loungewear', 'Combinaisons', 'Pyjamas Enfants', 'Ensembles Enfants', 'Chaussons & Accessoires'].map(p => (
-                <li key={p}>{p}</li>
+            <p className="footer-title">Collections</p>
+            <ul className="mt-5 space-y-3">
+              {productLinks.map((item) => (
+                <li key={item} className="font-body text-sm text-white/52">
+                  {item}
+                </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <p className="label mb-6">Contact</p>
-            <ul className="flex flex-col gap-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={15} className="text-[var(--rose)] mt-0.5 shrink-0"/>
-                <span className="font-body text-sm text-white/50 leading-relaxed">
-                  Face au marché de Kindonou,<br/>même alignement que la Pharmacie Kindonou,<br/>Cotonou, Bénin
+            <p className="footer-title">Boutique</p>
+            <ul className="mt-5 space-y-4">
+              <li className="flex gap-3">
+                <MapPin size={17} className="mt-1 shrink-0 text-[var(--terre)]" />
+                <span className="font-body text-sm leading-7 text-white/62">
+                  {site.address.line1}<br />
+                  {site.address.line2}<br />
+                  {site.address.city}
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone size={15} className="text-[var(--rose)] shrink-0"/>
-                <a href="tel:+22997338843" className="font-body text-sm text-white/50 hover:text-white transition-colors">
-                  +229 01 97 33 88 43
+                <Phone size={17} className="shrink-0 text-[var(--terre)]" />
+                <a href={site.phoneHref} className="footer-link">
+                  {site.phone}
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <MessageCircle size={15} className="text-[var(--rose)] shrink-0"/>
-                <a href="https://wa.me/22997338843" target="_blank" rel="noopener noreferrer"
-                  className="font-body text-sm text-white/50 hover:text-white transition-colors">
+                <MessageCircle size={17} className="shrink-0 text-[var(--terre)]" />
+                <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="footer-link">
                   WhatsApp
                 </a>
               </li>
             </ul>
-            <div className="flex gap-3 mt-8">
-              {[
-                { href: 'https://www.instagram.com/lamaisondespyjamas2025/', label: 'Instagram',
-                  icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg> },
-                { href: 'https://www.facebook.com/61563460230523/', label: 'Facebook',
-                  icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg> },
-              ].map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                  className="w-9 h-9 border border-white/10 flex items-center justify-center text-white/40 hover:border-[var(--rose)] hover:text-[var(--rose)] transition-all">
-                  {s.icon}
-                </a>
-              ))}
+
+            <div className="mt-7 flex gap-3">
+              <a href={site.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-link">
+                <IconInstagram />
+              </a>
+              <a href={site.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-link">
+                <IconFacebook />
+              </a>
+              <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="group inline-flex h-10 items-center gap-2 border border-white/12 px-4 font-body text-xs font-bold uppercase text-white/70 transition-colors hover:border-[var(--terre)] hover:text-white">
+                Commander
+                <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom */}
-      <div className="container py-6 flex flex-col md:flex-row items-center justify-between gap-3">
-        <p className="font-body text-xs text-white/25">© 2025 La Maison des Pyjamas — Cotonou, Bénin. Tous droits réservés.</p>
-        <p className="font-body text-xs text-white/20">Qualité · Douceur · Confiance</p>
+      <div className="container flex flex-col gap-3 py-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
+        <p className="font-body text-xs text-white/35">
+          © 2026 La Maison des Pyjamas. Cotonou, Bénin.
+        </p>
+        <p className="font-body text-xs text-white/30">
+          Qualité sélectionnée · Service direct · Confort familial
+        </p>
       </div>
     </footer>
   )

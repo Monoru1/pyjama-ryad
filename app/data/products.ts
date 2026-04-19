@@ -1,13 +1,20 @@
 export type Product = {
   id: string
   name: string
-  category: 'adulte' | 'enfant'
+  category: ProductCategory
   subcategory: string
   description: string
   sizes: string[]
   price: string
   image: string
   badge?: string
+}
+
+export type ProductCategory = 'adulte' | 'enfant'
+
+export const categoryLabels: Record<ProductCategory, string> = {
+  adulte: 'Adultes',
+  enfant: 'Enfants',
 }
 
 export const products: Product[] = [
@@ -225,6 +232,15 @@ export const products: Product[] = [
   },
 ]
 
-export const getAdultes = () => products.filter(p => p.category === 'adulte')
-export const getEnfants = () => products.filter(p => p.category === 'enfant')
-export const getFeatured = () => products.filter(p => p.badge)
+export const getProductsByCategory = (category: ProductCategory) =>
+  products.filter((product) => product.category === category)
+
+export const getProductsBySubcategory = (category: ProductCategory, subcategory: string) =>
+  products.filter((product) => product.category === category && product.subcategory === subcategory)
+
+export const getSubcategories = (category: ProductCategory) =>
+  Array.from(new Set(getProductsByCategory(category).map((product) => product.subcategory)))
+
+export const getAdultes = () => getProductsByCategory('adulte')
+export const getEnfants = () => getProductsByCategory('enfant')
+export const getFeatured = () => products.filter((product) => product.badge)

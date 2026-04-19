@@ -1,83 +1,51 @@
-import ProductCard from '../components/ProductCard'
-import { products } from '../data/products'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import Breadcrumb from '../components/ui/Breadcrumb'
+import FinalCTA from '../components/sections/FinalCTA'
+import PageHero from '../components/sections/PageHero'
+import ProductGrid from '../components/sections/ProductGrid'
+import SectionHeader from '../components/ui/SectionHeader'
+import { getAdultes, getEnfants, products } from '../data/products'
 
 export const metadata = { title: 'Catalogue Complet' }
 
 export default function CataloguePage() {
-  const adultes = products.filter(p => p.category === 'adulte')
-  const enfants = products.filter(p => p.category === 'enfant')
+  const collections = [
+    { title: 'Adultes', href: '/adultes', products: getAdultes() },
+    { title: 'Enfants', href: '/enfants', products: getEnfants() },
+  ]
 
   return (
     <>
-      {/* Hero editorial */}
-      <section className="pt-[72px] bg-[var(--creme)] border-b border-[var(--border)]">
-        <div className="container py-20">
-          <div className="max-w-2xl">
-            <p className="label mb-4">Notre Univers</p>
-            <h1 className="font-display font-medium text-[var(--noir)] mb-6" style={{ fontSize: 'clamp(2.5rem,6vw,5rem)' }}>
-              Catalogue<br/><span className="text-[var(--rose)]">Complet</span>
-            </h1>
-            <p className="font-body text-[var(--gris)] text-lg">
-              {products.length} modèles soigneusement sélectionnés — pyjamas, joggings et combinaisons pour adultes et enfants.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Notre univers"
+        title={<>Catalogue<br />Complet</>}
+        description={`${products.length} modèles soigneusement sélectionnés: pyjamas, joggings et combinaisons pour adultes et enfants.`}
+        image="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1500&q=85"
+        compact
+      />
+      <Breadcrumb current="Catalogue" />
 
-      {/* ADULTES */}
-      <section className="section">
-        <div className="container">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <p className="label mb-3">Collection</p>
-              <h2 className="font-display text-4xl font-medium text-[var(--noir)]">Adultes</h2>
-            </div>
-            <Link href="/adultes" className="arrow-link text-[var(--gris)] hover:text-[var(--rose)]">
-              Page dédiée <ArrowRight size={15}/>
-            </Link>
+      {collections.map((collection, index) => (
+        <section key={collection.title} className={`section ${index % 2 === 0 ? 'bg-[var(--creme)]' : 'bg-white'} border-b border-[var(--lin)]`}>
+          <div className="container">
+            <SectionHeader
+              eyebrow="Collection"
+              title={collection.title}
+              description={`${collection.products.length} modèles disponibles.`}
+              action={
+                <Link href={collection.href} className="arrow-link text-[var(--brun-moyen)]">
+                  Page dédiée <ArrowRight size={15} />
+                </Link>
+              }
+              className="mb-10"
+            />
+            <ProductGrid products={collection.products} />
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {adultes.map(p => <ProductCard key={p.id} product={p}/>)}
-          </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
-      {/* Séparateur */}
-      <div className="container"><div className="border-t border-[var(--border)]"/></div>
-
-      {/* ENFANTS */}
-      <section className="section">
-        <div className="container">
-          <div className="flex items-end justify-between mb-12">
-            <div>
-              <p className="label mb-3">Collection</p>
-              <h2 className="font-display text-4xl font-medium text-[var(--noir)]">Enfants</h2>
-            </div>
-            <Link href="/enfants" className="arrow-link text-[var(--gris)] hover:text-[var(--rose)]">
-              Page dédiée <ArrowRight size={15}/>
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {enfants.map(p => <ProductCard key={p.id} product={p}/>)}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-[var(--noir)] py-20">
-        <div className="container text-center">
-          <h2 className="font-display text-white text-3xl font-medium mb-4">Un modèle vous intéresse ?</h2>
-          <p className="font-body text-white/50 mb-8">Contactez-nous par WhatsApp ou téléphone pour commander.</p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="https://wa.me/22997338843" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              Commander sur WhatsApp
-            </a>
-            <Link href="/contact" className="btn btn-ghost-white">Autres contacts</Link>
-          </div>
-        </div>
-      </section>
+      <FinalCTA title="Un modèle vous intéresse ?" text="Contactez-nous par WhatsApp ou téléphone pour vérifier la disponibilité." />
     </>
   )
 }

@@ -1,10 +1,17 @@
+import Image from 'next/image'
 import { Product } from '../data/products'
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="product-card">
       <div className="card-img" style={{ aspectRatio: '3/4' }}>
-        <img src={product.image} alt={product.name} loading="lazy"/>
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+          className="object-cover"
+        />
         {product.badge && (
           <span className="badge absolute top-3 left-3">{product.badge}</span>
         )}
